@@ -85,17 +85,25 @@
     </p>
 
     <script>
-      let calculation = '';
+      
+      let calculation = localStorage.getItem('calculation') || '';
+      
 
       function updateCalculation(caracter){
         if(caracter !== '' && caracter !== '='){
           calculation += caracter;
           console.log(calculation);
+          localStorage.setItem('calculation',calculation);
+
         }else if(caracter === '='){
           calculation = eval(calculation);
           console.log(calculation);
+          calculation = JSON.stringify(calculation);
+          localStorage.setItem('calculation',calculation);
+
         }else if (caracter === ''){
           calculation = '';
+          localStorage.removeItem('calculation');
           console.log('Cleared.');
         }
         
