@@ -66,10 +66,6 @@
       ">.</button>
 
       <button onclick="
-        // Note: eval() takes a string and runs it as code.
-        // Avoid using eval() in real world projects since
-        // it can potentially be given harmful code to run.
-        // Only use eval() for learning purposes.
         updateCalculation('=');
       ">=</button>
 
@@ -84,30 +80,40 @@
       ">Clear</button>
     </p>
 
+    <p class="js-calculation-display"></p>
+
     <script>
       
       let calculation = localStorage.getItem('calculation') || '';
+        
+      document.querySelector('.js-calculation-display').innerHTML = `Calculo: ${calculation}`;
       
+      function updateDisplay() {
+        document.querySelector('.js-calculation-display').innerHTML = `Calculo: ${calculation}`;
+      }
 
       function updateCalculation(caracter){
         if(caracter !== '' && caracter !== '='){
           calculation += caracter;
           console.log(calculation);
           localStorage.setItem('calculation',calculation);
+          updateDisplay();
 
         }else if(caracter === '='){
           calculation = eval(calculation);
           console.log(calculation);
           calculation = JSON.stringify(calculation);
           localStorage.setItem('calculation',calculation);
+          updateDisplay();
 
         }else if (caracter === ''){
           calculation = '';
           localStorage.removeItem('calculation');
           console.log('Cleared.');
+          updateDisplay();
         }
-        
       }
+
     </script>
   </body>
 </html>
